@@ -18,5 +18,15 @@ This library currently provides the following annotations:
 
 ## Transforms
 
-The `@IndividualId` and `@OwlProperty` annotations carry a `transform` attribute, specifying a Class of `Function<Object, String>`.  Annotation processors are expected to instantiate the specified `Function`, and `apply(..)` it to the value of the _annotated field_ prior to RDF serialization.
+The `@IndividualId` and `@OwlProperty` annotations carry a `transform` attribute, specifying a Class of `Function`.  Annotation processors are expected to instantiate the specified `Function`, and `apply(..)` it to the value of the _annotated field_ prior to RDF serialization.
+
+## Tranformation Use Cases
+
+Transforms are useful for type mapping or value tranformation.  
+
+If your Java model represents timestamps using a Joda DateTime object, you can use a transformation function to convert it to a Java Calendar instance which will be typed as an xsd:dateTime type in the RDF model.
+
+If your Java model encodes identifiers using full URLs, you can use a transformation function to decode the unique id from the URL and use it as a RDF resource identifier.
+
+
 
