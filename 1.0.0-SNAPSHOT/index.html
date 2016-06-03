@@ -139,7 +139,14 @@
                                   
             <div class="section">
 <h2><a name="Lightweight_RDF_Annotations"></a>Lightweight RDF Annotations</h2>
-<p>The <a href="rdf-annotations">rdf-annotations module</a> provides support for mapping Java classes and member fields to OWL RDF. </p></div>
+<p>The <a href="rdf-annotations">rdf-annotations module</a> provides support for mapping Java classes and member fields to OWL RDF. </p>
+
+<ul>
+  
+<li><a class="externalLink" href="http://emetsger.github.io/osf-rdf/1.0.0-SNAPSHOT/">Homepage</a></li>
+  
+<li><a class="externalLink" href="http://emetsger.github.io/osf-rdf/1.0.0-SNAPSHOT/apidocs/index.html">Javadoc</a></li>
+</ul></div>
 <div class="section">
 <h2><a name="Shortcomings"></a>Shortcomings</h2>
 <p>This library is a work-in-progress, and does not cover every imaginable use case when mapping Java domain models to RDF. Furthermore, this library supports a specific domain model and is not generally applicable to arbitrary domains.</p></div>
@@ -157,7 +164,12 @@
 </ul></div>
 <div class="section">
 <h2><a name="Transforms"></a>Transforms</h2>
-<p>The <tt>@IndividualId</tt> and <tt>@OwlProperty</tt> annotations carry a <tt>transform</tt> attribute, specifying a Class of <tt>Function&lt;Object, String&gt;</tt>. Annotation processors are expected to instantiate the specified <tt>Function</tt>, and <tt>apply(..)</tt> it to the value of the <i>annotated field</i> prior to RDF serialization.</p></div>
+<p>The <tt>@IndividualId</tt> and <tt>@OwlProperty</tt> annotations carry a <tt>transform</tt> attribute, specifying a Class of <tt>Function</tt>. Annotation processors are expected to instantiate the specified <tt>Function</tt>, and <tt>apply(..)</tt> it to the value of the <i>annotated field</i> prior to RDF serialization.</p></div>
+<div class="section">
+<h2><a name="Tranformation_Use_Cases"></a>Tranformation Use Cases</h2>
+<p>Transforms are useful for type mapping or value tranformation. </p>
+<p>If your Java model represents timestamps using a Joda DateTime object, you can use a transformation function to convert it to a Java Calendar instance which will be typed as an xsd:dateTime type in the RDF model.</p>
+<p>If your Java model encodes identifiers using full URLs, you can use a transformation function to decode the unique id from the URL and use it as a RDF resource identifier.</p></div>
                   </div>
             </div>
           </div>
