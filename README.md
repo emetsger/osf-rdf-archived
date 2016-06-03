@@ -1,8 +1,9 @@
 ## Lightweight RDF Annotations
 
-The [rdf-annotations module](rdf-annotations) provides support for mapping Java classes and member fields to OWL RDF.  This library is a work-in-progress, and does not cover every imaginable use case when mapping Java domain models to RDF.
+The [rdf-annotations module](rdf-annotations) provides support for mapping Java classes and member fields to OWL RDF.  
 
-Furthermore, this library supports a specific domain model and is not generally applicable to arbitrary domains.
+## Shortcomings
+This library is a work-in-progress, and does not cover every imaginable use case when mapping Java domain models to RDF.  Furthermore, this library supports a specific domain model and is not generally applicable to arbitrary domains.
 
 ## Annotations
 
