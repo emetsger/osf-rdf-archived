@@ -20,9 +20,9 @@ This library currently provides the following annotations:
 
 ## Transforms
 
-The `@IndividualId` and `@OwlProperty` annotations carry a `transform` attribute, specifying a Class of `Function`.  Annotation processors are expected to instantiate the specified `Function`, and `apply(..)` it to the value of the _annotated field_ prior to RDF serialization.
+The `@IndividualId` and `@OwlProperty` annotations carry two attributes: `transform` and `classTransform`.  Both annotations specify a Class of `Function`.  Annotation processors are expected to instantiate the specified `Function`, and `apply(..)` it to the value of the _annotated field_ prior to RDF serialization.
 
-## Tranformation Use Cases
+### Tranformation Use Cases
 
 Transforms are useful for type mapping or value tranformation.  
 
@@ -30,5 +30,44 @@ If your Java model represents timestamps using a Joda DateTime object, you can u
 
 If your Java model encodes identifiers using full URLs, you can use a transformation function to decode the unique id from the URL and use it as a RDF resource identifier.
 
+### Class transforms vs Field transforms
 
+Transformer classes that are annotated as `transform` will be applied to the value of the annotated field.  That is, the argument `t` for `apply(T t)` will be the value of the annotated field.
 
+Transformer classes that are annotated as `classTransform` will be applied to the value of instance of the class that declares the annotated field.  In the example below, the `ProviderIdTransform` is a class transform, so it receives an instance of the class that declares the annotated field.  The argument `t` for `apply(T t)` will be the instance of the class declaring the annotated field.
+
+```java
+public class File {
+
+  @OwlProperty(value = OwlProperties.OSF_HAS_ID, classTransform = ProviderIdTransform.class)
+  private String id;
+  
+  private String provider;
+  
+  // ...
+}
+
+public class ProviderIdTransform implements Function<File, String> {
+  @Override
+  String apply(File f) {
+    return f.getProvider() + ":" f.getId();
+  }
+}
+```
+
+### Processing Transformations
+
+If you are responsible for transforming annotated fields of a model, you are faced with a choice: which transform should be applied to an annotated field?  The field transformation identified by the `transform` attribute, or the class transformation identified by the `classTransform` attribute?  The individual who wrote the model and supplied the annotations has an intent, but it can be hard to discern.  This is a weak point of this library, and will probably be revised in the future.
+
+#### Intent
+
+The recommended approach to discerning the intent of the modeler is to rank the transformations in this order:
+
+  * Prefer a non-default, non-identity field transform.
+  * Prefer a non-default, non-identity class transform.
+  * Prefer a field transform over a default class transform.
+  * Prefer the class transform.
+  
+#### Future
+
+In the future, the `classTransform` attribute will go away, and be replaced with a new attribute such as `transformType`, with possible values being `field` or `class`.  That way the intent of the modeler is explicit.
