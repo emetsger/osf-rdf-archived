@@ -22,7 +22,7 @@ This library currently provides the following annotations:
 
 The `@IndividualId` and `@OwlProperty` annotations carry two attributes: `transform` and `mode`.  Annotation processors are expected to instantiate the specified `Function` specified by the `transform` attribute and `apply(..)` it to the value of the _annotated field_ based on the specified `TransformMode`, prior to RDF serialization.
 
-### Tranformation Use Cases
+### Transformation Use Cases
 
 Transforms are useful for type mapping or value tranformation.  
 
