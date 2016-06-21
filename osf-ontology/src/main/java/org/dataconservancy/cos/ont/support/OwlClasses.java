@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dataconservancy.cos.rdf.support;
+package org.dataconservancy.cos.ont.support;
 
 /**
- * Supported OWL classes.  Java classes annotated with {@link org.dataconservancy.cos.rdf.annotations.OwlIndividual} may
- * be mapped to the OWL classes enumerated here.
+ * Supported OSF OWL classes.  Java classes annotated with {@code org.dataconservancy.cos.rdf.annotations.OwlIndividual}
+ * may be mapped to the OWL classes enumerated here.
  */
 public enum OwlClasses {
 

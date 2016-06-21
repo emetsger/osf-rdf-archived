@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dataconservancy.cos.rdf.support;
+package org.dataconservancy.cos.ont.support;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Maintains constants relating to the use of RDF.
  */
 public class Rdf {
-
-    public static final Function IDENTITY = Function.identity();
 
     /**
      * Common RDF namespaces and namespace prefixes.

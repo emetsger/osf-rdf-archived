@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dataconservancy.cos.rdf.support;
+package org.dataconservancy.cos.ont.support;
 
 /**
- * Supported OWL properties.  Java fields annotated with {@link org.dataconservancy.cos.rdf.annotations.OwlProperty} may
- * be mapped to the OWL properties enumerated here.
+ * Supported OSF OWL properties.  Java fields annotated with {@code org.dataconservancy.cos.rdf.annotations.OwlProperty}
+ * may be mapped to the OWL properties enumerated here.
  */
 public enum OwlProperties {
 
