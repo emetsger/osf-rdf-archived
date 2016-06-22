@@ -294,7 +294,7 @@
   <!-- Repositories =============================================== -->
 
   <!-- Enable when artifacts are released and published -->
-  <!--repositories>
+  <repositories>
     <repository>
       <id>dc.maven.releases</id>
       <name>Data Conservancy Public Maven 2 Repository (releases)</name>
@@ -321,6 +321,6 @@
       </snapshots>
     </repository>
 
-  </repositories-->
+  </repositories>
 
 </project>
