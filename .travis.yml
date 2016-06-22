@@ -9,3 +9,5 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_3fcc553e51cd_key -iv $encrypted_3fcc553e51cd_iv
   -in settings.tar.enc -out settings.tar -d
 - tar xf settings.tar
+addons:
+  ssh_known_hosts: maven.dataconservancy.org
