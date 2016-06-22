@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dataconservancy.cos.ont.support;
+package org.dataconservancy.cos.rdf.support;
 
 /**
  * Supported OSF OWL properties.  Java fields annotated with {@code org.dataconservancy.cos.rdf.annotations.OwlProperty}
