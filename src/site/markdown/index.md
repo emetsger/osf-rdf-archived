@@ -54,3 +54,5 @@ public class ProviderIdTransform implements Function<File, String> {
   }
 }
 ```
+
+[![Build Status](https://travis-ci.org/emetsger/osf-rdf.svg?branch=master)](https://travis-ci.org/emetsger/osf-rdf)
