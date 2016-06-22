@@ -36,7 +36,6 @@
   
   <modules>
     <module>rdf-annotations</module>
-    <module>osf-ontology</module>
   </modules>
 
   <!-- Build Properties  ========================================== -->
