@@ -10,5 +10,3 @@ before_install:
   -in settings.tar.enc -out settings.tar -d
 - tar xf settings.tar
 - cat known_hosts >> ~/.ssh/known_hosts
-addons:
-  ssh_known_hosts: maven.dataconservancy.org
