@@ -20,17 +20,17 @@ This library currently provides the following annotations:
 
 ## Transforms
 
-The `@IndividualId` and `@OwlProperty` annotations carry two attributes: `transform` and `mode`.  Annotation processors are expected to instantiate the specified `Function` specified by the `transform` attribute and `apply(..)` it to the value of the _annotated field_ based on the specified `TransformMode`, prior to RDF serialization.
+Fields annotated with `@IndividualId` and `@OwlProperty` may be transformed according to a `FunctionalInterface` specified by the `transform` attribute.  Annotation processors are expected to instantiate the class specified by the `transform` attribute and `apply(..)` it to the prior to RDF serialization.
 
 ### Transformation Use Cases
 
-Transforms are useful for type mapping or value tranformation.  
+Transforms have a number of use cases:   
 
-If your Java model represents timestamps using a Joda DateTime object, you can use a transformation function to convert it to a Java Calendar instance which will be typed as an xsd:dateTime type in the RDF model.
-
-If your Java model encodes identifiers using full URLs, you can use a transformation function to decode the unique id from the URL and use it as a RDF resource identifier.
-
-### Class transforms vs Field transforms
+ * Type mapping: if your Java model represents timestamps using a Joda DateTime object, you can use a transformation function to convert it to a Java Calendar instance which will be typed as an xsd:dateTime type in the RDF model.
+ * Decoding: if your Java model encodes identifiers using full URLs, you can use a transformation function to decode the unique id from the URL and use it as a RDF resource identifier.
+ * Hash URIs: if you would rather identify your resources using hash URIs, you can use a transformation function to produce a hash URI 
+ 
+### `@OwlProperty` transformation modality
 
 Transformer classes that are annotated as `mode = TransformMode.FIELD` will be applied to the value of the annotated field.  That is, the argument `t` for `apply(T t)` will be the value of the annotated field.
 
@@ -54,5 +54,50 @@ public class ProviderIdTransform implements Function<File, String> {
   }
 }
 ```
+
+Please note that only the `@OwlProperty` has a transformation modality.
+
+### `@IndividualUri` transforms with BiFunction
+
+The `@IndividualUri` does not have modalities like `@OwlProperty`.  Instead, transformations are performed using a `BiFunction`.  
+
+The arguments supplied to the `BiFunction` are the instance of the object that has the OWL individual as
+a member, and the instance of the OWL individual that has this field as an annotated member.
+
+
+Given the following domain model (getters and setters elided for brevity):
+```java
+@OwlIndividual
+public class Book {
+    @IndividualUri
+    String bookTitle = "Moby Dick";
+    List<;Chapter> chapters;
+}
+
+@OwlIndividual
+public class Chapter {
+    @IndividualUri
+    Integer chapterNo = 1;
+    List<Page> pages;
+}
+
+@OwlIndividual
+public class Page {
+    @IndividualUri
+    Integer pageId = 1;
+}
+```
+
+The transform for `bookTitle` will receive as arguments `null` and an instance of `Book`.  The transform for `chapterNo` will receive as arguments an instance of `Book` and an instance of `Chapter`.  Finally, the transform for `pageNo` will receive an instance of `Chapter` and an instance of `Page`.  In each case, the default transformation will return the String value of the annotated field: "Moby Dick", "1", and "1" for the Book, Chapter, and Page respectively.
+
+Suppose you wanted RDF resource identifiers for a `Page` to be hash URIs on `Chapter` instances:
+
+```
+ <1>       a ex:Chapter .  # A Chapter individual with RDF resource ID "1"
+ <1#page1> a ex:Page .     # A Page individual with RDF resource ID "1#page1"
+ <1#page2> a ex:Page .     # ... with resource ID "1#page2"
+```
+
+A custom transform for the `Page` `@IndividualUri` would `accept(Chapter t, Page u)` and return the `String` `1#page1` and `1#page2`, and so on, for each `Page` instance.
 
 [![Build Status](https://travis-ci.org/emetsger/osf-rdf.svg?branch=master)](https://travis-ci.org/emetsger/osf-rdf)
